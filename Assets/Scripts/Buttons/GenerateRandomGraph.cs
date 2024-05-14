@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,22 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
     RectTransform gridTransform;    
     LineRenderer lineRenderer;
 
+    [NonSerialized] public bool isGraphGenerated = false;
+
+    public static GenerateRandomGraph Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         gridTransform = gridLayout.GetComponent<RectTransform>();
@@ -31,7 +48,9 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
     {        
         GetNodesInArray();
         CreateEdges();
-        //RemoveUnconnectedNodes();
+        RemoveUnconnectedNodes();
+
+        isGraphGenerated = true;
     }
 
     void GetNodesInArray()
@@ -41,11 +60,24 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
         foreach (Transform child in gridLayout.transform)
         {
             randomTransformGraph[noOfNodes] = child;
-            if(!randomTransformGraph[noOfNodes].gameObject.activeSelf)
-            {
-                randomTransformGraph[noOfNodes].gameObject.SetActive(true);
-            }
+            InitNode(randomTransformGraph[noOfNodes]);
+            
             noOfNodes++;
+        }
+    }
+
+    void InitNode(Transform node)
+    {
+        Image image = node.gameObject.GetComponent<Image>();
+
+        if(!image.enabled)
+        {
+            image.enabled = true;
+        } 
+
+        if(image.sprite.name != "Node")
+        {
+            image.sprite = Resources.Load<Sprite>("Node");
         }
     }
 
@@ -140,14 +172,14 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
             {
                 if (adjacencyMatrix[i, j] != 0)
                 {
-                    Debug.Log($"(I,J): ({i},{j}) and Value: {adjacencyMatrix[i, j]}");
+                    //Debug.Log($"(I,J): ({i},{j}) and Value: {adjacencyMatrix[i, j]}");
                     keepNode = true;
                     break;
                 }
             }
             if (!keepNode)
             {
-                randomTransformGraph[i].gameObject.SetActive(false);
+                randomTransformGraph[i].gameObject.GetComponent<Image>().enabled = false;
             }
         }
     }

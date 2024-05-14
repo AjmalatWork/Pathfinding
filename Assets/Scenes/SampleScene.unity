@@ -636,14 +636,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 50
+    m_Left: 30
     m_Right: 20
-    m_Top: 60
+    m_Top: 80
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 60, y: 55}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 20
@@ -16945,8 +16945,8 @@ GameObject:
   - component: {fileID: 1616065151}
   - component: {fileID: 1616065154}
   m_Layer: 5
-  m_Name: SetDestination
-  m_TagString: Untagged
+  m_Name: SetDestinationButton
+  m_TagString: Destination
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17065,6 +17065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e319a4150d0d77846b028afe01e5fe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridLayout: {fileID: 29101096}
 --- !u!1001 &1632660711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21349,11 +21350,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7026669044347967287, guid: 9d620b1552e965b4d928eebcb8bd9bce, type: 3}
   m_PrefabInstance: {fileID: 1887940510}
   m_PrefabAsset: {fileID: 0}
---- !u!120 &1887940514 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 8602169617875408576, guid: 9d620b1552e965b4d928eebcb8bd9bce, type: 3}
-  m_PrefabInstance: {fileID: 1887940510}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1901632558
 GameObject:
   m_ObjectHideFlags: 0
@@ -23459,8 +23455,8 @@ GameObject:
   - component: {fileID: 2096266981}
   - component: {fileID: 2096266984}
   m_Layer: 5
-  m_Name: SetSource
-  m_TagString: Untagged
+  m_Name: SetSourceButton
+  m_TagString: Source
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23579,6 +23575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f0acd6aa7077541b4cff76c83a4f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridLayout: {fileID: 29101096}
 --- !u!1001 &2105142847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24268,8 +24265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridLayout: {fileID: 29101096}
-  lineRenderer: {fileID: 1887940514}
-  edgeProbability: 60
+  edgeProbability: 20
 --- !u!1001 &2137123354
 PrefabInstance:
   m_ObjectHideFlags: 0
