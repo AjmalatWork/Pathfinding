@@ -18,40 +18,53 @@ public class Node : MonoBehaviour
     {
         Sprite sprite;
 
+        // If Set Source is clicked
         if(SetSource.Instance.isSetSourceClicked)
         {
-            sprite = Resources.Load<Sprite>("Node Source");
+            sprite = Resources.Load<Sprite>(ImageConstants.nodeSource);
             if(sprite != null ) 
             {
                 image.sprite = sprite;
             }
             SetSource.Instance.isSetSourceClicked = false;
+            SetSource.Instance.sourceNode = this;
             isSourceSet = true;
         }
+        // If Set Destination is clicked
         else if(SetDestination.Instance.isSetDestinationClicked)
         {
-            sprite = Resources.Load<Sprite>("Node Target");
+            sprite = Resources.Load<Sprite>(ImageConstants.nodeTarget);
             if (sprite != null)
             {
                 image.sprite = sprite;
             }
             SetDestination.Instance.isSetDestinationClicked = false;
+            SetDestination.Instance.destinationNode = this;
             isDestinationSet = true;
         }
+
+        
         foreach (Transform child in gridLayout.transform)
-        {            
+        {   
+            // There can always be only one source and one destination
             if (child.gameObject != gameObject) 
             {
                 Image childImage = child.GetComponent<Image>();
-                if (childImage.sprite.name == "Node Source" && isSourceSet)
+
+                // If any other node has source node image, change it with normal node
+                if (childImage.sprite.name == ImageConstants.nodeSource && isSourceSet)
                 {
-                    childImage.sprite = Resources.Load<Sprite>("Node");
+                    childImage.sprite = Resources.Load<Sprite>(ImageConstants.node);
                 }
-                if (childImage.sprite.name == "Node Target" && isDestinationSet)
+
+                // If any other node has destination node image, change it with normal node
+                if (childImage.sprite.name == ImageConstants.nodeTarget && isDestinationSet)
                 {
-                    childImage.sprite = Resources.Load<Sprite>("Node");
+                    childImage.sprite = Resources.Load<Sprite>(ImageConstants.node);
                 }
-            }            
+            }
+
+            // Remove onclick event listener from all nodes
             child.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         }
     }

@@ -12,7 +12,7 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
     const int numRows = 11;
 
     Transform[] randomTransformGraph = new Transform[numColumns * numRows];
-    float[,] adjacencyMatrix = new float[numColumns * numRows, numColumns * numRows];
+    [NonSerialized] public float[,] adjacencyMatrix = new float[numColumns * numRows, numColumns * numRows];
 
     int lineCount;
     RectTransform gridTransform;    
@@ -60,8 +60,7 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
         foreach (Transform child in gridLayout.transform)
         {
             randomTransformGraph[noOfNodes] = child;
-            InitNode(randomTransformGraph[noOfNodes]);
-            
+            InitNode(randomTransformGraph[noOfNodes]);            
             noOfNodes++;
         }
     }
@@ -75,9 +74,9 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
             image.enabled = true;
         } 
 
-        if(image.sprite.name != "Node")
+        if(image.sprite.name != ImageConstants.node)
         {
-            image.sprite = Resources.Load<Sprite>("Node");
+            image.sprite = Resources.Load<Sprite>(ImageConstants.node);
         }
     }
 

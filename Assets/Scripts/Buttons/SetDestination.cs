@@ -6,6 +6,7 @@ public class SetDestination : BaseUIButton, IClickableUI
 {
     public GridLayoutGroup gridLayout;
     [NonSerialized] public bool isSetDestinationClicked = false;
+    [NonSerialized] public Node destinationNode;
 
     public static SetDestination Instance { get; private set; }
 

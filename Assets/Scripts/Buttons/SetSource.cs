@@ -6,6 +6,7 @@ public class SetSource : BaseUIButton, IClickableUI
 {
     public GridLayoutGroup gridLayout;
     [NonSerialized] public bool isSetSourceClicked = false;
+    [NonSerialized] public Node sourceNode;
 
     public static SetSource Instance { get; private set; }
 
