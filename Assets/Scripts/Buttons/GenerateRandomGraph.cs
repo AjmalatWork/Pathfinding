@@ -11,11 +11,13 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
     const int numColumns = 20;
     const int numRows = 11;
 
-    Transform[] randomTransformGraph = new Transform[numColumns * numRows];
+    readonly Transform[] randomTransformGraph = new Transform[numColumns * numRows];
     [NonSerialized] public float[,] adjacencyMatrix = new float[numColumns * numRows, numColumns * numRows];
+    [NonSerialized] public float distanceStraight;
+    [NonSerialized] public float distanceDiagonal;
 
     int lineCount;
-    RectTransform gridTransform;    
+    [NonSerialized] public RectTransform gridTransform;    
     LineRenderer lineRenderer;
 
     [NonSerialized] public bool isGraphGenerated = false;
@@ -40,17 +42,30 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
     }
 
     public new void OnClick()
-    {        
+    {
+        if(!gridLayout.gameObject.activeSelf)
+        {
+            gridLayout.gameObject.SetActive(true);
+        }
+        
+        FindPath.Instance.lineRenderer.positionCount = 0;
         GenerateGraph();
     }
 
     void GenerateGraph()
     {        
         GetNodesInArray();
+        GetDistances();
         CreateEdges();
         RemoveUnconnectedNodes();
 
         isGraphGenerated = true;
+    }
+
+    void GetDistances()
+    {
+        distanceStraight = Vector2.Distance(randomTransformGraph[0].transform.position, randomTransformGraph[1].transform.position);
+        distanceDiagonal = Vector2.Distance(randomTransformGraph[0].transform.position, randomTransformGraph[numColumns + 1].transform.position);
     }
 
     void GetNodesInArray()
@@ -85,8 +100,8 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
     //  *   *   *   *   *
     //  *   *   *   *   *
     //  *   *   *   *   *
-    // For each node in above graph, we need to connect nodes with only 3 other nodes that are neighbouring to it
-    // One to the right, One down and One diagonally right down
+    // For each node in above graph, we need to connect nodes with only 4 other nodes that are neighbouring to it
+    // One to the top right, one right, one bottom and one bottom right
     void CreateEdges()
     {
         int noOfNodes = randomTransformGraph.Length;        
@@ -98,10 +113,12 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
             lineRenderer.positionCount = 8;
             float neighbourDistance;
 
+            randomTransformGraph[i].GetComponent<Node>().InitNode(i, i / noOfNodes, i % noOfNodes);
+
             bool isLastColumn = ((i + 1) % numColumns == 0) ? true : false;
 
             if (i + 1 < noOfNodes && !isLastColumn)
-            {
+            {                
                 neighbourDistance = ConnectNodes(randomTransformGraph[i], randomTransformGraph[i + 1]);
                 adjacencyMatrix[i, i + 1] = neighbourDistance;
                 adjacencyMatrix[i + 1, i] = neighbourDistance;
@@ -155,8 +172,6 @@ public class GenerateRandomGraph : BaseUIButton, IClickableUI
         lineRenderer.SetPosition(lineCount, worldStartPosition);
         lineRenderer.SetPosition(lineCount + 1, worldEndPosition);
         lineCount += 2;
-
-        //Debug.Log(node1.name + worldStartPosition + " to " + worldEndPosition);
     }
 
     void RemoveUnconnectedNodes()

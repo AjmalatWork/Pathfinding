@@ -24,6 +24,7 @@ public class SetDestination : BaseUIButton, IClickableUI
 
     public new void OnClick()
     {
+        FindPath.Instance.lineRenderer.positionCount = 0;
         if (!GenerateRandomGraph.Instance.isGraphGenerated)
         {
             Debug.LogWarning("Generate graph first!");

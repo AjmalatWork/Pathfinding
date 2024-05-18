@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,24 @@ public class Node : MonoBehaviour
     Image image;
     bool isSourceSet = false;
     bool isDestinationSet = false;
+
+    public int Index; // Unique index for each node
+    public int X, Y; // Position on a grid or graph
+    public float GCost; // Cost from start to this node
+    public float HCost; // Heuristic cost from this node to end
+    public float FCost => GCost + HCost; // Total cost
+    public Node Parent; // To reconstruct the path
+
+    public void InitNode(int index, int x, int y)
+    {
+        Index = index;
+        X = x;
+        Y = y;
+        GCost = float.MaxValue; // Initialize to a large value
+        HCost = 0;
+        Parent = null;
+        FindPath.Instance.nodes.Add(this);
+    }
 
     private void Awake()
     {

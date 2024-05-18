@@ -23,7 +23,8 @@ public class SetSource : BaseUIButton, IClickableUI
     }
     public new void OnClick()
     {
-        if(!GenerateRandomGraph.Instance.isGraphGenerated)
+        FindPath.Instance.lineRenderer.positionCount = 0;
+        if (!GenerateRandomGraph.Instance.isGraphGenerated)
         {
             Debug.LogWarning("Generate graph first!");
             return;
