@@ -1,5 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-# Force recognition of C# as the primary language
-*.cs linguist-language=C#
+# Ignore TMP Package
+Assets/TextMesh?Pro/** linguist-vendored
